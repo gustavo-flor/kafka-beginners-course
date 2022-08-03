@@ -13,7 +13,7 @@ public class ProducerDemo {
     private static final Logger log = LoggerFactory.getLogger(ProducerDemo.class);
 
     public static void main(String[] args) {
-        log.info("Hello World!");
+        log.info("I'm a Kafka Producer!");
 
         Properties properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
