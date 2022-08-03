@@ -3,6 +3,7 @@ package com.github.gustavoflor.kafkabasics;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -13,10 +14,10 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 
-public class ConsumerDemoWithShutdown {
-    private static final Logger log = LoggerFactory.getLogger(ConsumerDemoWithShutdown.class);
+public class ConsumerDemoCooperative {
+    private static final Logger log = LoggerFactory.getLogger(ConsumerDemoCooperative.class);
     private static final String BOOTSTRAP_SERVERS = "127.0.0.1:9092";
-    private static final String GROUP_ID = "second-consumer-demo";
+    private static final String GROUP_ID = "third-consumer-demo";
     private static final String TOPIC = "java-basics";
 
     public static void main(String[] args) {
@@ -28,6 +29,8 @@ public class ConsumerDemoWithShutdown {
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // latest, none, earliest
+        properties.setProperty(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, CooperativeStickyAssignor.class.getName());
+//        properties.setProperty(ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, ?); to use static assignment consumer
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
 
