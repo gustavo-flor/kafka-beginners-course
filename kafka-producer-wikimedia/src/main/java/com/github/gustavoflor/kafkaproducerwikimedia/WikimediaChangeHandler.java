@@ -30,7 +30,7 @@ public class WikimediaChangeHandler implements EventHandler {
 
     @Override
     public void onMessage(final String event, final MessageEvent messageEvent) {
-        log.info("Message received with data = {}", messageEvent.getData());
+        log.info("Message received with data = {} and event = {}", messageEvent.getData(), event);
         kafkaProducer.send(new ProducerRecord<>(topic, messageEvent.getData()));
     }
 
